@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Uploaded/encrypted files
+backend/uploads/
+
+# Temporary files
+backend/temp/
+
+# SQLite database
+backend/filemeta.db
+
+# Logs
+*.log
+
+# OS/system files
+.DS_Store
+Thumbs.db

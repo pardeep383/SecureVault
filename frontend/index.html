@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SecureVault – Upload & Encrypt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Background like 2nd screenshot */
+        body {
+            background: radial-gradient(circle at top left, #1c2238, #0e0f1a 70%);
+            color: var(--text, #fff);
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header spacing */
+        header {
+            padding: 24px 40px 16px 40px;
+        }
+
+        /* Brand styling */
+        .brand-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-sub {
+            font-size: 0.95rem;
+            color: #b0b7c9;
+        }
+
+        /* Gradient glowing title */
+        h1.title {
+            background: linear-gradient(90deg, #4c8dff, #5ee6d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: clamp(2.4rem, 4.8vw, 3.6rem);
+            font-weight: 900;
+            text-shadow: 0 0 12px rgba(76,141,255,0.4);
+        }
+
+        .lead {
+            color: #c0c6d9;
+            margin-bottom: 24px;
+        }
+
+        /* Upload form layout */
+        .upload-form {
+            margin-top: 20px;
+        }
+
+        .input-well {
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 14px;
+            padding: 12px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            color: #ddd;
+        }
+
+        /* Full width link box */
+        #downloadLink {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.2);
+            background: #1a2141;
+            color: #f0f0f0;
+            font-size: 0.95rem;
+        }
+
+        .download-box {
+            margin-top: 16px;
+            background: rgba(255,255,255,.06);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.18);
+        }
+
+        /* File list rows */
+        .file-item {
+            background: rgba(255,255,255,.08);
+            padding: 10px 14px;
+            margin-top: 8px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .file-item strong {
+                color: #5ee6d0;
+            }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid rgba(255,255,255,.2);
+            margin-top: 40px;
+            padding-top: 16px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #b0b7c9;
+        }
+
+            .site-footer a {
+                color: #4c8dff;
+                text-decoration: underline;
+            }
+
+        /* Buttons */
+        .btn.primary-lg {
+            height: 50px;
+            padding: 0 24px;
+            border-radius: 16px;
+            font-weight: 700;
+        }
+
+        .btn.secondary {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .extra-btn {
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="wrap" style="display:flex; align-items:center; justify-content:space-between;">
+            <!-- Left -->
+            <a class="logo-wrap" href="index.html" style="gap:14px; text-decoration:none;">
+                <span class="logo">🔐</span>
+                <span>
+                    <span class="brand-title">SecureVault</span><br>
+                    <span class="brand-sub">Safe File Sharing</span>
+                </span>
+            </a>
+            <!-- Right -->
+            <nav style="display:flex; gap:12px;">
+                <a class="btn secondary" href="login.html">Login</a>
+                <a class="btn primary-lg" href="signup.html">Sign Up</a>
+                <!-- ✅ New Admin Panel button -->
+                <a class="btn secondary" href="admin_login.html">Admin Panel</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <section class="form-card">
+            <h1 class="title">Upload & Encrypt</h1>
+            <p class="lead">SecureVault encrypts your files with military-grade AES and generates secure download links with built-in decryption keys. Upload below to get started.</p>
+
+            <!-- Upload Form -->
+            <form id="uploadForm" class="upload-form">
+                <div class="input-well">
+                    <input type="file" name="file" id="fileInput" multiple required>
+                </div>
+                <button type="submit" class="btn primary-lg mt-16">⬆ Upload & Encrypt</button>
+            </form>
+
+            <!-- Success -->
+            <div class="success-section" id="output" style="display:none; margin-top:20px;">
+                <p>✅ <strong>File(s) uploaded successfully!</strong></p>
+                <div class="download-box">
+                    <p>🔗 Your download & decryption link:</p>
+                    <input type="text" id="downloadLink" readonly>
+                    <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                        <button id="uploadAnother" class="btn primary-lg">⬆ Upload Another File</button>
+                        <button id="copyLinkBtn" class="btn secondary" onclick="copyText('downloadLink')">📋 Copy Link</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File list -->
+            <div class="file-list" id="fileList" style="margin-top:20px;"></div>
+
+            <!-- ✅ New Decrypt Button -->
+            <div class="extra-btn">
+                <a href="download.html" class="btn primary-lg">🔓 Decrypt Your File</a>
+            </div>
+
+            <!-- Footer -->
+            <footer class="site-footer">
+                By using this service, you agree to our <a href="terms.html">Terms & Conditions</a>.<br>
+                <strong>Your privacy is our main priority.</strong> • © 2025 SecureVault
+            </footer>
+        </section>
+    </main>
+
+    <script>
+        const uploadForm = document.getElementById("uploadForm");
+        const fileInput = document.getElementById("fileInput");
+        const output = document.getElementById("output");
+        const fileList = document.getElementById("fileList");
+        const uploadAnother = document.getElementById("uploadAnother");
+        const downloadLinkInput = document.getElementById("downloadLink");
+
+        uploadForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const formData = new FormData();
+            const files = fileInput.files;
+
+            for (let i = 0; i < files.length; i++) {
+                formData.append("file", files[i]);
+            }
+
+            const response = await fetch("/upload", { method: "POST", body: formData });
+            const result = await response.json();
+
+            if (result.files && result.files.length > 0) {
+                output.style.display = "block";
+                fileList.innerHTML = "";
+                const firstFile = result.files[0];
+                downloadLinkInput.value = `${firstFile.downloadLink}/${firstFile.decryptionKey}`;
+                result.files.forEach(file => {
+                    const div = document.createElement("div");
+                    div.classList.add("file-item");
+                    div.innerHTML = `📁 <strong>${file.originalName}</strong>
+                    <a href="${file.downloadLink}/${file.decryptionKey}" target="_blank">Download & Decrypt</a>`;
+                    fileList.appendChild(div);
+                });
+            } else {
+                alert("❌ Upload failed. Please try again.");
+            }
+        });
+
+        uploadAnother?.addEventListener("click", function () {
+            uploadForm.reset();
+            output.style.display = "none";
+            downloadLinkInput.value = "";
+            fileList.innerHTML = "";
+        });
+
+        function copyText(id) {
+            const input = document.getElementById(id);
+            input.select();
+            document.execCommand("copy");
+            alert("✅ Link copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

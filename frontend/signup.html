@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - SecureVault</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(1200px 800px at 15% 10%, #1c2238, transparent 60%), radial-gradient(1000px 700px at 85% 20%, rgba(124,156,255,.12), transparent 60%), linear-gradient(160deg, #0e0f1a, #161b2c);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .brand-sub {
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+            .btn.primary {
+                background: linear-gradient(90deg, #4c8dff, #5ee6d0);
+                color: #fff;
+            }
+
+            .btn.secondary {
+                background: rgba(255,255,255,0.08);
+                color: #fff;
+            }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(3.2rem, 6vw, 4.2rem);
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ffffff, #4c8dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #bbb;
+            margin-bottom: 25px;
+        }
+
+        .signup-box {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            backdrop-filter: blur(12px);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+            .signup-box input {
+                width: 100%;
+                padding: 12px;
+                margin: 12px 0;
+                border-radius: 10px;
+                border: 1px solid rgba(255,255,255,0.2);
+                background: #1a2141;
+                color: #fff;
+                font-size: 1rem;
+            }
+
+            .signup-box button {
+                width: 100%;
+                padding: 12px;
+                margin-top: 12px;
+                border-radius: 12px;
+                border: none;
+                background: linear-gradient(90deg, #4c8dff, #5ee6d0);
+                color: #fff;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+        .footer {
+            margin-top: 18px;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
+            .footer a {
+                color: #4c8dff;
+                text-decoration: underline;
+            }
+
+        #status {
+            margin-top: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a class="logo-wrap" href="index.html">
+            <span class="logo">🔐</span>
+            <span>
+                <span class="brand-title">SecureVault</span><br>
+                <span class="brand-sub">Safe File Sharing</span>
+            </span>
+        </a>
+        <nav>
+            <a class="btn secondary" href="login.html">Login</a>
+            <a class="btn primary" href="signup.html">Sign Up</a>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <h1>Welcome to SecureVault</h1>
+        <p class="subtitle">Create your account to start sharing securely</p>
+        <div class="signup-box">
+            <form id="signupForm">
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <input type="password" id="password" placeholder="Create a password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p id="status"></p>
+            <div class="footer">
+                Already have an account? <a href="login.html">Login here</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Script -->
+    <script>
+        const form = document.getElementById('signupForm');
+        const status = document.getElementById('status');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+                status.innerText = result.message;
+
+                if (result.success) {
+                    status.style.color = "lightgreen";
+                    // Redirect to login after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 2000);
+                } else {
+                    status.style.color = "red";
+                }
+            } catch (error) {
+                status.innerText = "❌ Network error. Please try again.";
+                status.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>

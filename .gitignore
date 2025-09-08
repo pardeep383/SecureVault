@@ -1,8 +1,9 @@
 # Dependencies
 node_modules/
 
-# Uploaded/encrypted files
-backend/uploads/
+# Uploaded/encrypted files (ignore contents but keep folder)
+backend/uploads/*
+!backend/uploads/.gitkeep
 
 # Temporary files
 backend/temp/

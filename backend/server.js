@@ -10,6 +10,11 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Force landing page → signup.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/signup.html'));
+});
+
 // Import route files
 const authRoutes = require('./routes/auth');
 const uploadRoutes = require('./routes/upload');

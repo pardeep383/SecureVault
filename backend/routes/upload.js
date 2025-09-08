@@ -1,4 +1,5 @@
-﻿const express = require("express");
+﻿// 📁 backend/routes/upload.js
+const express = require("express");
 const multer = require("multer");
 const crypto = require("crypto");
 const path = require("path");
@@ -49,9 +50,9 @@ router.post("/upload", upload.array("file"), (req, res) => {
 
             const fileId = this.lastID;
             uploadedFiles.push({
+                id: fileId,                // ✅ Only send id
                 originalName: file.originalname,
-                downloadLink: `http://localhost:3000/download/${fileId}`,
-                decryptionKey: key
+                decryptionKey: key         // ✅ Send key
             });
 
             processed++;

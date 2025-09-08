@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Background like 2nd screenshot */
         body {
             background: radial-gradient(circle at top left, #1c2238, #0e0f1a 70%);
             color: var(--text, #fff);
@@ -14,12 +13,10 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Header spacing */
         header {
             padding: 24px 40px 16px 40px;
         }
 
-        /* Brand styling */
         .brand-title {
             font-size: 1.8rem;
             font-weight: 800;
@@ -31,7 +28,6 @@
             color: #b0b7c9;
         }
 
-        /* Gradient glowing title */
         h1.title {
             background: linear-gradient(90deg, #4c8dff, #5ee6d0);
             -webkit-background-clip: text;
@@ -46,7 +42,6 @@
             margin-bottom: 24px;
         }
 
-        /* Upload form layout */
         .upload-form {
             margin-top: 20px;
         }
@@ -63,7 +58,6 @@
             color: #ddd;
         }
 
-        /* Full width link box */
         #downloadLink {
             width: 100%;
             padding: 12px 14px;
@@ -82,7 +76,6 @@
             border: 1px solid rgba(255,255,255,.18);
         }
 
-        /* File list rows */
         .file-item {
             background: rgba(255,255,255,.08);
             padding: 10px 14px;
@@ -96,7 +89,6 @@
                 color: #5ee6d0;
             }
 
-        /* Footer */
         .site-footer {
             border-top: 1px solid rgba(255,255,255,.2);
             margin-top: 40px;
@@ -111,7 +103,6 @@
                 text-decoration: underline;
             }
 
-        /* Buttons */
         .btn.primary-lg {
             height: 50px;
             padding: 0 24px;
@@ -139,7 +130,6 @@
     <!-- Header -->
     <header>
         <div class="wrap" style="display:flex; align-items:center; justify-content:space-between;">
-            <!-- Left -->
             <a class="logo-wrap" href="index.html" style="gap:14px; text-decoration:none;">
                 <span class="logo">🔐</span>
                 <span>
@@ -147,11 +137,9 @@
                     <span class="brand-sub">Safe File Sharing</span>
                 </span>
             </a>
-            <!-- Right -->
             <nav style="display:flex; gap:12px;">
                 <a class="btn secondary" href="login.html">Login</a>
                 <a class="btn primary-lg" href="signup.html">Sign Up</a>
-                <!-- ✅ New Admin Panel button -->
                 <a class="btn secondary" href="admin_login.html">Admin Panel</a>
             </nav>
         </div>
@@ -163,7 +151,6 @@
             <h1 class="title">Upload & Encrypt</h1>
             <p class="lead">SecureVault encrypts your files with military-grade AES and generates secure download links with built-in decryption keys. Upload below to get started.</p>
 
-            <!-- Upload Form -->
             <form id="uploadForm" class="upload-form">
                 <div class="input-well">
                     <input type="file" name="file" id="fileInput" multiple required>
@@ -171,7 +158,6 @@
                 <button type="submit" class="btn primary-lg mt-16">⬆ Upload & Encrypt</button>
             </form>
 
-            <!-- Success -->
             <div class="success-section" id="output" style="display:none; margin-top:20px;">
                 <p>✅ <strong>File(s) uploaded successfully!</strong></p>
                 <div class="download-box">
@@ -184,15 +170,12 @@
                 </div>
             </div>
 
-            <!-- File list -->
             <div class="file-list" id="fileList" style="margin-top:20px;"></div>
 
-            <!-- ✅ New Decrypt Button -->
             <div class="extra-btn">
                 <a href="download.html" class="btn primary-lg">🔓 Decrypt Your File</a>
             </div>
 
-            <!-- Footer -->
             <footer class="site-footer">
                 By using this service, you agree to our <a href="terms.html">Terms & Conditions</a>.<br>
                 <strong>Your privacy is our main priority.</strong> • © 2025 SecureVault
@@ -223,13 +206,17 @@
             if (result.files && result.files.length > 0) {
                 output.style.display = "block";
                 fileList.innerHTML = "";
+
+                const baseURL = window.location.origin; // ✅ dynamic domain
                 const firstFile = result.files[0];
-                downloadLinkInput.value = `${firstFile.downloadLink}/${firstFile.decryptionKey}`;
+
+                downloadLinkInput.value = `${baseURL}/download/${firstFile.id}/${firstFile.decryptionKey}`;
+
                 result.files.forEach(file => {
                     const div = document.createElement("div");
                     div.classList.add("file-item");
                     div.innerHTML = `📁 <strong>${file.originalName}</strong>
-                    <a href="${file.downloadLink}/${file.decryptionKey}" target="_blank">Download & Decrypt</a>`;
+                        <a href="${baseURL}/download/${file.id}/${file.decryptionKey}" target="_blank">Download & Decrypt</a>`;
                     fileList.appendChild(div);
                 });
             } else {

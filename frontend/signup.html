@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Sign Up - SecureVault</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
     <style>
         body {
             margin: 0;
@@ -98,7 +98,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             backdrop-filter: blur(12px);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
         }
 
@@ -126,6 +126,11 @@
                 cursor: pointer;
             }
 
+        #status {
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
         .footer {
             margin-top: 18px;
             font-size: 0.9rem;
@@ -136,20 +141,15 @@
                 color: #4c8dff;
                 text-decoration: underline;
             }
-
-        #status {
-            margin-top: 12px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <a class="logo-wrap" href="signup.html">
+        <a class="logo-wrap" href="index.html">
             <span class="logo">🔐</span>
             <span>
-                <span class="brand-title">SecureVault</span><br>
+                <span class="brand-title">SecureVault</span><br />
                 <span class="brand-sub">Safe File Sharing</span>
             </span>
         </a>
@@ -163,10 +163,13 @@
     <main>
         <h1>Welcome to SecureVault</h1>
         <p class="subtitle">Create your account to start sharing securely</p>
+
         <div class="signup-box">
             <form id="signupForm">
-                <input type="email" id="email" placeholder="Enter your email" required>
-                <input type="password" id="password" placeholder="Create a password" required>
+                <input type="text" id="firstName" placeholder="First Name" required />
+                <input type="text" id="lastName" placeholder="Last Name" required />
+                <input type="email" id="email" placeholder="Enter your email" required />
+                <input type="password" id="password" placeholder="Create a password" required />
                 <button type="submit">Sign Up</button>
             </form>
             <p id="status"></p>
@@ -184,32 +187,32 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
 
             try {
                 const response = await fetch('/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ firstName, lastName, email, password })
                 });
 
                 const result = await response.json();
                 status.innerText = result.message;
 
                 if (result.success) {
-                    status.style.color = "lightgreen";
-                    // ✅ Redirect to login after 2 seconds
-                    setTimeout(() => {
-                        window.location.href = "login.html";
-                    }, 2000);
+                    status.style.color = 'lightgreen';
+                    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
                 } else {
-                    status.style.color = "red";
+                    status.style.color = 'red';
                 }
-            } catch (error) {
-                status.innerText = "❌ Network error. Please try again.";
-                status.style.color = "red";
+            } catch (err) {
+                status.innerText = '❌ Network error. Please try again.';
+                status.style.color = 'red';
             }
         });
     </script>
 </body>
+</html>

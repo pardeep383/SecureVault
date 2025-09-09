@@ -12,7 +12,7 @@
             color: #fff;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            height: 100vh;
         }
 
         header {
@@ -69,14 +69,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 40px 20px;
-            margin-top: 20px;
+            justify-content: center;
+            padding: 20px;
             text-align: center;
         }
 
         h1 {
-            font-size: clamp(3.2rem, 6vw, 4.2rem);
+            font-size: clamp(2.8rem, 6vw, 4rem);
             font-weight: 900;
             margin-bottom: 10px;
             background: linear-gradient(90deg, #ffffff, #4c8dff);
@@ -88,6 +87,7 @@
             font-size: 1.1rem;
             color: #bbb;
             margin-bottom: 25px;
+            max-width: 500px;
         }
 
         .signup-box {
@@ -162,7 +162,10 @@
     <!-- Main -->
     <main>
         <h1>Welcome to SecureVault</h1>
-        <p class="subtitle">Create your account to start sharing securely</p>
+        <p class="subtitle">
+            Create your account to securely share files — from doctors sending reports,
+            to schools distributing results, to businesses exchanging confidential documents.
+        </p>
 
         <div class="signup-box">
             <form id="signupForm">

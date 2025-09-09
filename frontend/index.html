@@ -11,6 +11,9 @@
             color: var(--text, #fff);
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
 
         header {
@@ -40,6 +43,23 @@
         .lead {
             color: #c0c6d9;
             margin-bottom: 24px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .form-card {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
         }
 
         .upload-form {
@@ -124,6 +144,13 @@
         .extra-btn {
             margin-top: 24px;
         }
+
+        small {
+            display: block;
+            margin-top: 6px;
+            color: #bbb;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
@@ -149,7 +176,7 @@
     <main>
         <section class="form-card">
             <h1 class="title">Upload & Encrypt</h1>
-            <p class="lead">SecureVault encrypts your files with military-grade AES and generates secure download links with built-in decryption keys. Upload below to get started.</p>
+            <p class="lead">SecureVault keeps your business, healthcare, and personal files safe with military-grade AES encryption. Upload your file to generate a secure link instantly.</p>
 
             <form id="uploadForm" class="upload-form">
                 <div class="input-well">
@@ -173,7 +200,8 @@
             <div class="file-list" id="fileList" style="margin-top:20px;"></div>
 
             <div class="extra-btn">
-                <a href="download.html" class="btn primary-lg">🔓 Decrypt Your File</a>
+                <a href="download.html" class="btn primary-lg">🔓 Decrypt a File</a>
+                <small>Already have a key? Paste it here to unlock shared files.</small>
             </div>
 
             <footer class="site-footer">
@@ -207,16 +235,15 @@
                 output.style.display = "block";
                 fileList.innerHTML = "";
 
-                const baseURL = window.location.origin; // ✅ dynamic domain
+                const baseURL = window.location.origin;
                 const firstFile = result.files[0];
-
                 downloadLinkInput.value = `${baseURL}/download/${firstFile.id}/${firstFile.decryptionKey}`;
 
                 result.files.forEach(file => {
                     const div = document.createElement("div");
                     div.classList.add("file-item");
                     div.innerHTML = `📁 <strong>${file.originalName}</strong>
-                        <a href="${baseURL}/download/${file.id}/${file.decryptionKey}" target="_blank">Download & Decrypt</a>`;
+                            <a href="${baseURL}/download/${file.id}/${file.decryptionKey}" target="_blank">Download & Decrypt</a>`;
                     fileList.appendChild(div);
                 });
             } else {

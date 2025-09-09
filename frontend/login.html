@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login - SecureVault</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8" />
+    <title>Sign Up - SecureVault</title>
+    <link rel="stylesheet" href="css/style.css" />
     <style>
         body {
             margin: 0;
@@ -12,7 +12,7 @@
             color: #fff;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            height: 100vh;
         }
 
         header {
@@ -69,14 +69,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 40px 20px;
-            margin-top: 20px;
+            justify-content: center;
+            padding: 20px;
             text-align: center;
         }
 
         h1 {
-            font-size: clamp(3.2rem, 6vw, 4.5rem);
+            font-size: clamp(2.8rem, 6vw, 4rem);
             font-weight: 900;
             margin-bottom: 10px;
             background: linear-gradient(90deg, #ffffff, #4c8dff);
@@ -88,9 +87,10 @@
             font-size: 1.1rem;
             color: #bbb;
             margin-bottom: 25px;
+            max-width: 500px;
         }
 
-        .login-box {
+        .signup-box {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.18);
             border-radius: 20px;
@@ -98,11 +98,11 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             backdrop-filter: blur(12px);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
         }
 
-            .login-box input {
+            .signup-box input {
                 width: 100%;
                 padding: 12px;
                 margin: 12px 0;
@@ -113,10 +113,10 @@
                 font-size: 1rem;
             }
 
-            .login-box button {
+            .signup-box button {
                 width: 100%;
                 padding: 12px;
-                margin-top: 14px;
+                margin-top: 12px;
                 border-radius: 12px;
                 border: none;
                 background: linear-gradient(90deg, #4c8dff, #5ee6d0);
@@ -146,82 +146,74 @@
 <body>
     <!-- Header -->
     <header>
-        <a class="logo-wrap" href="signup.html">
+        <a class="logo-wrap" href="index.html">
             <span class="logo">🔐</span>
             <span>
-                <span class="brand-title">SecureVault</span><br>
+                <span class="brand-title">SecureVault</span><br />
                 <span class="brand-sub">Safe File Sharing</span>
             </span>
         </a>
         <nav>
-            <a class="btn secondary" href="signup.html">Sign Up</a>
-            <a class="btn primary" href="login.html">Login</a>
+            <a class="btn secondary" href="login.html">Login</a>
+            <a class="btn primary" href="signup.html">Sign Up</a>
         </nav>
     </header>
 
     <!-- Main -->
     <main>
-        <h1>Login to your account</h1>
-        <p class="subtitle">Access your files securely with SecureVault</p>
-        <div class="login-box">
-            <form id="loginForm">
-                <input type="email" id="email" placeholder="Enter your email" required>
-                <input type="password" id="password" placeholder="Enter your password" required>
+        <h1>Welcome to SecureVault</h1>
+        <p class="subtitle">
+            Create your account to securely share files — from doctors sending reports,
+            to schools distributing results, to businesses exchanging confidential documents.
+        </p>
 
-                <!-- OTP box (hidden until server sends it) -->
-                <div id="otpDiv" style="display:none;">
-                    <input type="text" id="otp" placeholder="Enter OTP">
-                </div>
-
-                <button type="submit">Login</button>
+        <div class="signup-box">
+            <form id="signupForm">
+                <input type="text" id="firstName" placeholder="First Name" required />
+                <input type="text" id="lastName" placeholder="Last Name" required />
+                <input type="email" id="email" placeholder="Enter your email" required />
+                <input type="password" id="password" placeholder="Create a password" required />
+                <button type="submit">Sign Up</button>
             </form>
             <p id="status"></p>
             <div class="footer">
-                Don’t have an account? <a href="signup.html">Sign up here</a>
+                Already have an account? <a href="login.html">Login here</a>
             </div>
         </div>
     </main>
 
     <!-- Script -->
     <script>
-        const form = document.getElementById('loginForm');
-        const otpDiv = document.getElementById('otpDiv');
+        const form = document.getElementById('signupForm');
         const status = document.getElementById('status');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
-            const otp = document.getElementById('otp').value;
 
             try {
-                const response = await fetch('/login', {
+                const response = await fetch('/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password, otp })
+                    body: JSON.stringify({ firstName, lastName, email, password })
                 });
 
                 const result = await response.json();
                 status.innerText = result.message;
 
-                if (result.message.includes("OTP sent")) {
-                    status.style.color = "lightgreen";
-                    otpDiv.style.display = 'block'; // show OTP field
-                } else if (result.message.includes("Invalid OTP")) {
-                    status.style.color = "red";
-                } else if (result.success) {
-                    status.style.color = "lightgreen";
-                    // ✅ redirect to main dashboard (index.html)
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 2000);
+                if (result.success) {
+                    status.style.color = 'lightgreen';
+                    setTimeout(() => { window.location.href = 'login.html'; }, 1500);
                 } else {
-                    status.style.color = "red";
+                    status.style.color = 'red';
                 }
-            } catch (error) {
-                status.innerText = "❌ Network error. Please try again.";
-                status.style.color = "red";
+            } catch (err) {
+                status.innerText = '❌ Network error. Please try again.';
+                status.style.color = 'red';
             }
         });
     </script>

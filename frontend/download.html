@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Download File - SecureVault</title>
+    <title>Decrypt File - SecureVault</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
@@ -67,16 +67,14 @@
         main {
             flex: 1;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            justify-content: flex-start;
-            padding: 40px 20px;
-            margin-top: 20px;
+            padding: 20px;
             text-align: center;
         }
 
         h1 {
-            font-size: clamp(3.2rem, 6vw, 4.5rem);
+            font-size: clamp(3rem, 6vw, 4.5rem);
             font-weight: 900;
             margin-bottom: 10px;
             background: linear-gradient(90deg, #ffffff, #4c8dff);
@@ -98,7 +96,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             backdrop-filter: blur(12px);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
         }
 
@@ -161,16 +159,18 @@
 
     <!-- Main -->
     <main>
-        <h1>Decrypt Your File</h1>
-        <p class="subtitle">Enter your File ID and Decryption Key to download securely</p>
-        <div class="download-box">
-            <input type="text" id="fileId" placeholder="Enter File ID (e.g., 9)">
-            <input type="text" id="key" placeholder="Enter Decryption Key (Hex)">
-            <button onclick="downloadFile()">🔓 Download</button>
-        </div>
-        <p id="status"></p>
-        <div class="footer">
-            Back to <a href="index.html">Home</a>
+        <div>
+            <h1>Decrypt Your File</h1>
+            <p class="subtitle">Already have a key? Paste it here to unlock your shared file securely.</p>
+            <div class="download-box">
+                <input type="text" id="fileId" placeholder="Enter File ID (e.g., 9)">
+                <input type="text" id="key" placeholder="Enter Decryption Key (Hex)">
+                <button onclick="downloadFile()">🔓 Download</button>
+            </div>
+            <p id="status"></p>
+            <div class="footer">
+                Back to <a href="index.html">Home</a>
+            </div>
         </div>
     </main>
 
@@ -186,7 +186,6 @@
                 return;
             }
 
-            // Redirect to backend with params
             document.getElementById("status").innerText = "🔓 Preparing your download...";
             document.getElementById("status").style.color = "lightgreen";
 

@@ -69,27 +69,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 30px 20px;
-            margin-top: 20px; /* ⬆ moves content upwards */
+            justify-content: center; /* ✅ vertical center */
+            padding: 20px;
+            margin-top: -40px; /* ✅ pull upwards */
             text-align: center;
         }
 
         h1 {
-            font-size: clamp(3.2rem, 6vw, 4.2rem);
+            font-size: clamp(3rem, 6vw, 4rem);
             font-weight: 900;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             background: linear-gradient(90deg, #ffffff, #4c8dff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: #bbb;
-            margin-bottom: 28px;
-            max-width: 600px;
-            line-height: 1.5rem;
+            margin-bottom: 20px;
+            max-width: 500px; /* ✅ longer text stays aligned */
         }
 
         .signup-box {
@@ -100,8 +99,9 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             backdrop-filter: blur(12px);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
+            margin-top: 10px; /* ✅ less gap under subtitle */
         }
 
             .signup-box input {
@@ -134,7 +134,7 @@
         }
 
         .footer {
-            margin-top: 18px;
+            margin-top: 15px;
             font-size: 0.9rem;
             color: #bbb;
         }
@@ -163,11 +163,10 @@
 
     <!-- Main -->
     <main>
-        <h1>Welcome to <strong>SecureVault</strong></h1>
+        <h1>Welcome to SecureVault</h1>
         <p class="subtitle">
-            Create your account to securely share files — whether you’re a doctor sending patient reports,
-            a school distributing exam results, a business exchanging contracts, or simply protecting your personal files.
-            With SecureVault, your data stays safe, encrypted, and only accessible to the right people.
+            Create your account to securely share files — from doctors sending reports,
+            to schools distributing results, to businesses exchanging confidential documents.
         </p>
 
         <div class="signup-box">

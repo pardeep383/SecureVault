@@ -5,29 +5,32 @@
     <title>Decrypt File - SecureVault</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
+        :root {
+            --bg1: #1c2238;
+            --bg2: #0e0f1a;
+            --text: #fff;
+            --muted: #b0b7c9;
+            --accent1: #4c8dff;
+            --accent2: #5ee6d0;
+            --line: rgba(255,255,255,.18);
+        }
+
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(1200px 800px at 15% 10%, #1c2238, transparent 60%), radial-gradient(1000px 700px at 85% 20%, rgba(124,156,255,.12), transparent 60%), linear-gradient(160deg, #0e0f1a, #161b2c);
-            color: #fff;
+            background: radial-gradient(circle at 15% 10%, var(--bg1), var(--bg2) 70%);
+            color: var(--text);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
+        /* Header */
         header {
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .logo-wrap {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: inherit;
         }
 
         .brand-title {
@@ -36,13 +39,8 @@
         }
 
         .brand-sub {
-            font-size: 0.9rem;
-            color: #bbb;
-        }
-
-        nav {
-            display: flex;
-            gap: 12px;
+            font-size: .9rem;
+            color: var(--muted);
         }
 
         .btn {
@@ -52,77 +50,77 @@
             cursor: pointer;
             font-weight: 600;
             text-decoration: none;
+            color: #fff;
         }
 
             .btn.primary {
-                background: linear-gradient(90deg, #4c8dff, #5ee6d0);
-                color: #fff;
+                background: linear-gradient(90deg,var(--accent1),var(--accent2));
             }
 
             .btn.secondary {
-                background: rgba(255,255,255,0.08);
-                color: #fff;
+                background: rgba(255,255,255,.08);
             }
 
+        /* Main container */
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+        }
+
+        .download-card {
+            background: rgba(255,255,255,.06);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 40px 50px;
+            max-width: 480px;
+            width: 100%;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            backdrop-filter: blur(12px);
         }
 
         h1 {
-            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-size: clamp(2.4rem,6vw,3.5rem);
             font-weight: 900;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #ffffff, #4c8dff);
+            margin-bottom: 12px;
+            background: linear-gradient(90deg,#ffffff,var(--accent1));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
-            font-size: 1.1rem;
-            color: #bbb;
-            margin-bottom: 25px;
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 28px;
         }
 
-        .download-box {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            backdrop-filter: blur(12px);
+        .download-card input {
             width: 100%;
-            max-width: 420px;
+            padding: 14px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.2);
+            background: #1a2141;
+            color: #fff;
+            font-size: 1rem;
             text-align: center;
         }
 
-            .download-box input {
-                width: 100%;
-                padding: 12px;
-                margin: 12px 0;
-                border-radius: 10px;
-                border: 1px solid rgba(255,255,255,0.2);
-                background: #1a2141;
-                color: #fff;
-                font-size: 1rem;
-            }
-
-            .download-box button {
-                width: 100%;
-                padding: 12px;
-                margin-top: 14px;
-                border-radius: 12px;
-                border: none;
-                background: linear-gradient(90deg, #4c8dff, #5ee6d0);
-                color: #fff;
-                font-size: 1rem;
-                font-weight: 600;
-                cursor: pointer;
-            }
+        .download-card button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 14px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(90deg,var(--accent1),var(--accent2));
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
         #status {
             margin-top: 12px;
@@ -130,13 +128,13 @@
         }
 
         .footer {
-            margin-top: 18px;
-            font-size: 0.9rem;
-            color: #bbb;
+            margin-top: 20px;
+            font-size: .9rem;
+            color: var(--muted);
         }
 
             .footer a {
-                color: #4c8dff;
+                color: var(--accent1);
                 text-decoration: underline;
             }
     </style>
@@ -144,14 +142,14 @@
 <body>
     <!-- Header -->
     <header>
-        <a class="logo-wrap" href="index.html">
+        <a class="logo-wrap" href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
             <span class="logo">🔐</span>
             <span>
                 <span class="brand-title">SecureVault</span><br>
                 <span class="brand-sub">Safe File Sharing</span>
             </span>
         </a>
-        <nav>
+        <nav style="display:flex;gap:12px;">
             <a class="btn secondary" href="signup.html">Sign Up</a>
             <a class="btn primary" href="login.html">Login</a>
         </nav>
@@ -159,14 +157,12 @@
 
     <!-- Main -->
     <main>
-        <div>
+        <div class="download-card">
             <h1>Decrypt Your File</h1>
             <p class="subtitle">Already have a key? Paste it here to unlock your shared file securely.</p>
-            <div class="download-box">
-                <input type="text" id="fileId" placeholder="Enter File ID (e.g., 9)">
-                <input type="text" id="key" placeholder="Enter Decryption Key (Hex)">
-                <button onclick="downloadFile()">🔓 Download</button>
-            </div>
+            <input type="text" id="fileId" placeholder="Enter File ID (e.g., 9)">
+            <input type="text" id="key" placeholder="Enter Decryption Key (Hex)">
+            <button onclick="downloadFile()">🔓 Download</button>
             <p id="status"></p>
             <div class="footer">
                 Back to <a href="index.html">Home</a>
@@ -179,16 +175,16 @@
         function downloadFile() {
             const id = document.getElementById("fileId").value;
             const key = document.getElementById("key").value;
+            const status = document.getElementById("status");
 
             if (!id || !key) {
-                document.getElementById("status").innerText = "❌ Please enter both File ID and Decryption Key.";
-                document.getElementById("status").style.color = "red";
+                status.innerText = "❌ Please enter both File ID and Decryption Key.";
+                status.style.color = "red";
                 return;
             }
 
-            document.getElementById("status").innerText = "🔓 Preparing your download...";
-            document.getElementById("status").style.color = "lightgreen";
-
+            status.innerText = "🔓 Preparing your download...";
+            status.style.color = "lightgreen";
             window.location.href = `/download/${encodeURIComponent(id)}/${encodeURIComponent(key)}`;
         }
     </script>
